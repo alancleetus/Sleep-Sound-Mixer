@@ -45,7 +45,3 @@ Welcome to the Sleep Sound Mixer project! This application allows users to mix d
 1. Open the application in your browser.
 2. Adjust the volume and balance for each sound using the sliders.
 3. Play any sounds you desire.
- 
- 
----
-Feel free to adapt this template to better fit the specific details and features of your project.
