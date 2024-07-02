@@ -5,8 +5,10 @@ import Box from "@mui/material/Box";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import { v4 as uuidv4 } from "uuid";
+import { Howler } from "howler";
 
 function App() {
+  Howler.volume(0.5);
   const sounds = [
     { uuid: uuidv4(), song: "/sounds/music.mp3", icon: MusicNoteIcon },
     { uuid: uuidv4(), song: "/sounds/rain.mp3", icon: ThunderstormIcon },

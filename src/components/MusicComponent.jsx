@@ -13,8 +13,6 @@ function MusicComponent({ song, Icon }) {
   // useRef so the Howl object does not get recreated on render
   var howlInstance = useRef(null);
 
-  Howler.volume(volume);
-
   /* 
     *   The useEffect hook updates the volume of the Howl instance whenever the volume state changes.
         The useEffect hook takes two arguments:
