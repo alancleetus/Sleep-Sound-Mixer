@@ -1,70 +1,37 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
+import MusicComponent from "./components/MusicComponent.jsx";
 import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
-import { Howl, Howler } from "howler";
-import "./App.css";
-import music from "/rain.mp3";
+import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
+import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  // const [playing, setPlaying] = useState(false);
-  // const [volume, setVolume] = useState(0.5);
-  // const musicPlay = useRef(
-  //   new Howl({
-  //     src: [music],
-  //     volume: volume,
-  //   })
-  // );
-
-  // Howler.volume(volume);
-
-  // useEffect(() => {
-  //   musicPlay.current.volume(volume);
-  // }, [volume]);
-
-  // const handleOnClick = () => {
-  //   setPlaying((prevValue) => {
-  //     if (prevValue) {
-  //       musicPlay.current.pause();
-  //     } else {
-  //       musicPlay.current.play();
-  //     }
-  //     return !prevValue;
-  //   });
-  // };
-
-  const [playing, setPlaying] = React.useState(false);
-  const [volume, setVolume] = React.useState(0.5);
-
-  var musicPlay = new Howl({
-    src: [{ music }],
-    volume: volume,
-  });
-  Howler.volume(volume);
-
-  const handleOnClick = () => {
-    setPlaying((prevValue) => {
-      return !prevValue;
-    });
-    console.log(`${playing}: ${musicPlay} from file ${music}`);
-    playing ? musicPlay.play() : musicPlay.pause();
-  };
-
-  const handleVolumeChange = (event, newValue) => {
-    setVolume(newValue / 100);
-  };
+  const sounds = [
+    { uuid: uuidv4(), song: "/sounds/music.mp3", icon: MusicNoteIcon },
+    { uuid: uuidv4(), song: "/sounds/rain.mp3", icon: ThunderstormIcon },
+    { uuid: uuidv4(), song: "/sounds/lofi.mp3", icon: MusicNoteIcon },
+  ];
   return (
-    <>
-      <Box sx={{ width: 300 }}>
-        <Slider
-          defaultValue={50}
-          aria-label="Default"
-          valueLabelDisplay="auto"
-          onChange={handleVolumeChange}
-        />
-      </Box>
-      <button onClick={handleOnClick}>{playing ? "Pause" : "Play"}</button>
-    </>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {sounds.map((sound) => {
+        return (
+          <MusicComponent
+            key={sound.uuid}
+            song={sound.song}
+            Icon={sound.icon}
+          />
+        );
+      })}
+    </Box>
   );
 }
 
