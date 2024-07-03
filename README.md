@@ -4,6 +4,7 @@ Welcome to the Sleep Sound Mixer project! This application allows users to mix d
 
 <img src="https://img.shields.io/badge/react%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/> <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/>
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5c5d1979-98ac-4f61-b0bc-61104e221b6e/deploy-status)](https://app.netlify.com/sites/alan-c-sound-mixer/deploys)
+
 [TRY IT](https://alan-c-sound-mixer.netlify.app/)
 ## Features
 
