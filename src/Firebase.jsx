@@ -1,11 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
-console.log("import:" + import.meta.env.VITE_FIREBASE_API_KEY);
-console.log("proc:" + process.env.VITE_FIREBASE_API_KEY);
+// console.log("import:" + import.meta.env.VITE_FIREBASE_API_KEY);
+// console.log("proc:" + process.env.VITE_FIREBASE_API_KEY);
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,14 +15,12 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
-const storage = getStorage(app);
 const auth = getAuth(app);
 
-export { db, storage, auth };
+export { db, auth };
 
 export default app;
