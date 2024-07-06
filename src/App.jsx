@@ -10,6 +10,10 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, storage } from "./Firebase";
 import { ref } from "firebase/storage";
 
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+
 function App() {
   Howler.volume(0.5);
   /* TODO: UPLOAD MUSIC https://www.youtube.com/watch?v=YOAeBSCkArA */
@@ -49,28 +53,46 @@ function App() {
       console.error("Error signing in test user:", error);
     }
   };
-  return !loggedIn ? (
-    <button onClick={loginAsTestUser}>Login as Test User</button>
-  ) : (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 3,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {sounds.map((sound) => {
-        return (
-          <MusicComponent
-            key={sound.uuid}
-            song={sound.song}
-            Icon={sound.icon}
-          />
-        );
-      })}
-    </Box>
+
+  return (
+    <>
+      <Container
+        maxWidth="sm"
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CssBaseline />
+        {!loggedIn ? (
+          <Button variant="contained" onClick={loginAsTestUser}>
+            Login as Test User
+          </Button>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {sounds.map((sound) => {
+              return (
+                <MusicComponent
+                  key={sound.uuid}
+                  song={sound.song}
+                  Icon={sound.icon}
+                />
+              );
+            })}
+          </Box>
+        )}
+      </Container>
+    </>
   );
 }
 
