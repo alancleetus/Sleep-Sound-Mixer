@@ -1,12 +1,14 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useImperativeHandle } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { Howl, Howler } from "howler";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import PropTypes from "prop-types";
-function MusicComponent({ song, Icon }) {
+import { Typography } from "@mui/material";
+
+const MusicComponent = React.forwardRef(({ name, song, Icon }, ref) => {
   const [playing, setPlaying] = React.useState(false);
   const [volume, setVolume] = React.useState(0.5);
 
@@ -58,9 +60,21 @@ function MusicComponent({ song, Icon }) {
     });
   };
 
-  const handleVolumeChange = (event, newValue) => {
+  const handleVolumeChange = (e, newValue) => {
     setVolume(newValue / 100);
   };
+
+  const pauseSound = () => {
+    if (howlInstance.current) {
+      howlInstance.current.pause();
+      setPlaying(false);
+    }
+  };
+
+  // Expose pauseSound method to parent component
+  useImperativeHandle(ref, () => ({
+    pauseSound,
+  }));
 
   return (
     <div>
@@ -68,12 +82,15 @@ function MusicComponent({ song, Icon }) {
         sx={{
           display: "flex",
           alignItems: "center",
-          width: 300,
+          width: 500,
           gap: 2,
           mb: 3,
         }}
       >
         {Icon && <Icon sx={{ mr: 2 }} />}
+        <Typography variant="h6" component="h2">
+          {name}
+        </Typography>
         <Slider
           defaultValue={50}
           aria-label="Default"
@@ -86,11 +103,14 @@ function MusicComponent({ song, Icon }) {
       </Box>
     </div>
   );
-}
+});
 
 MusicComponent.propTypes = {
   song: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   Icon: PropTypes.elementType.isRequired,
 };
+
+MusicComponent.displayName = "MusicComponent";
 
 export default MusicComponent;
