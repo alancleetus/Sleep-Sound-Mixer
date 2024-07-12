@@ -25,7 +25,7 @@ import UmbrellaIcon from "@mui/icons-material/Umbrella";
 import GrainIcon from "@mui/icons-material/Grain";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
-
+import Grid from "@mui/material/Grid";
 function App() {
   Howler.volume(0.5);
 
@@ -97,7 +97,6 @@ function App() {
   return (
     <>
       <Container
-        maxWidth="sm"
         sx={{
           minHeight: "100vh",
           display: "flex",
@@ -123,28 +122,26 @@ function App() {
             <button onClick={pauseAllSounds}>Pause ALL</button>
             <SleepTimer PauseAll={pauseAllSounds} />
 
-            <Box
-              className="sounds-flex-box"
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 3,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+            <Grid
+              container
+              spacing={3}
+              justifyContent="center"
+              alignItems="center"
             >
               {sounds.map((sound, index) => {
                 return (
-                  <MusicComponent
-                    key={sound.id}
-                    name={sound.name}
-                    song={sound.url}
-                    Icon={sound.icon}
-                    ref={(el) => (musicRefs.current[index] = el)}
-                  />
+                  <Grid item xs={12} sm={6} md={4} key={sound.id}>
+                    <MusicComponent
+                      key={sound.id}
+                      name={sound.name}
+                      song={sound.url}
+                      Icon={sound.icon}
+                      ref={(el) => (musicRefs.current[index] = el)}
+                    />
+                  </Grid>
                 );
               })}
-            </Box>
+            </Grid>
           </Box>
         )}
       </Container>

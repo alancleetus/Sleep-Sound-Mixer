@@ -82,7 +82,7 @@ const MusicComponent = React.forwardRef(({ name, song, Icon }, ref) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          width: 500,
+          maxWidth: 500,
           gap: 2,
           mb: 3,
         }}
