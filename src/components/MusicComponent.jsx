@@ -7,8 +7,10 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import PropTypes from "prop-types";
 import { Typography } from "@mui/material";
+import "./musicComponent.css";
 
-const MusicComponent = React.forwardRef(({ name, song, Icon }, ref) => {
+import ToggleButton from "@mui/material/ToggleButton";
+const MusicComponent = React.forwardRef(({ name, song }, ref) => {
   const [playing, setPlaying] = React.useState(false);
   const [volume, setVolume] = React.useState(0.5);
 

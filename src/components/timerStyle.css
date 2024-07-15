@@ -1,0 +1,32 @@
+.modal-box {
+  background: #05000b;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 3;
+  justify-content: center;
+  align-items: center;
+  max-width: 100vh;
+}
+
+.modal-box Button {
+  width: 200px;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  background: #05000b;
+  border: 1px solid #7900f8;
+  color: #7900f8;
+}
+
+.modal-box Button:hover {
+  background: #7900f8;
+  border: 1px solid #7900f8;
+  color: white;
+}
+
+.close-modal {
+  margin: 10px;
+  color: #7900f8;
+  cursor: pointer;
+}

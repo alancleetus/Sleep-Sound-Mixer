@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import AlarmOutlinedIcon from "@mui/icons-material/AlarmOutlined";
+
+import PropTypes from "prop-types";
+import Modal from "@mui/material/Modal";
+
+import Box from "@mui/material/Box";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import "./timerStyle.css";
+import { ButtonGroup } from "@mui/material";
 
 export default function SleepTimer({ PauseAll }) {
   const [timer, setTimer] = useState(0);
@@ -30,35 +38,60 @@ export default function SleepTimer({ PauseAll }) {
     return setTimer(Number(e.target.value) * 60);
   }
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       <p>
         {Math.floor(timer / 60 / 60)}h {Math.floor((timer / 60) % 60)}m{" "}
         {timer % 60}s
       </p>
-      <ButtonGroup variant="contained" aria-label="Basic button group">
-        <Button value="30" onClick={handleClick}>
-          30m
-        </Button>
-        <Button value="45" onClick={handleClick}>
-          45m
-        </Button>
-        <Button value="60" onClick={handleClick}>
-          1h
-        </Button>
-        <Button value="90" onClick={handleClick}>
-          1h 30m
-        </Button>
-        <Button value="120" onClick={handleClick}>
-          2h
-        </Button>
-        {isRunning ? (
-          <Button onClick={handleStop}>Stop</Button>
-        ) : (
-          <Button onClick={handleStart}>Start</Button>
-        )}
-        <Button onClick={handleReset}>Reset</Button>
-      </ButtonGroup>
+      <AlarmOutlinedIcon onClick={handleOpen} sx={{ cursor: "pointer" }} />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className="modal-box">
+          <Button variant="outlined" value="30" onClick={handleClick}>
+            30m
+          </Button>
+          <Button variant="outlined" value="45" onClick={handleClick}>
+            45m
+          </Button>
+          <Button variant="outlined" value="60" onClick={handleClick}>
+            1h
+          </Button>
+          <Button variant="outlined" value="90" onClick={handleClick}>
+            1h 30m
+          </Button>
+          <Button variant="outlined" value="120" onClick={handleClick}>
+            2h
+          </Button>
+          <ButtonGroup>
+            {isRunning ? (
+              <Button variant="outlined" onClick={handleStop}>
+                Stop
+              </Button>
+            ) : (
+              <Button variant="outlined" onClick={handleStart}>
+                Start
+              </Button>
+            )}
+            <Button variant="outlined" onClick={handleReset}>
+              Reset
+            </Button>
+          </ButtonGroup>
+          <CloseOutlinedIcon onClick={handleClose} className="close-modal" />
+        </Box>
+      </Modal>
     </>
   );
 }
+
+SleepTimer.propTypes = {
+  PauseAll: PropTypes.func.isRequired,
+};

@@ -96,14 +96,7 @@ function App() {
   };
   return (
     <>
-      <Container
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <Container className="main-app-container">
         <CssBaseline />
         {!loggedIn ? (
           <Button variant="contained" onClick={loginAsTestUser}>
@@ -120,6 +113,7 @@ function App() {
             }}
           >
             <button onClick={pauseAllSounds}>Pause ALL</button>
+
             <SleepTimer PauseAll={pauseAllSounds} />
 
             <Grid
@@ -135,13 +129,22 @@ function App() {
                       key={sound.id}
                       name={sound.name}
                       song={sound.url}
-                      Icon={sound.icon}
+                      // Icon={sound.icon}
                       ref={(el) => (musicRefs.current[index] = el)}
                     />
                   </Grid>
                 );
               })}
             </Grid>
+            <Fab
+              className="fab-volume-mixer"
+              id="custom-fab"
+              variant="extended"
+              size="medium"
+            >
+              <TuneOutlinedIcon sx={{ mr: 1 }} />
+              Volume Mixer
+            </Fab>
           </Box>
         )}
       </Container>
