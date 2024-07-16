@@ -1,29 +1,26 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useRef, useEffect } from "react";
-import MusicComponent from "./components/MusicComponent.jsx";
+import { useState, useRef } from "react";
 import { Howler } from "howler";
+
+import MusicComponent from "./components/MusicComponent.jsx";
+import SleepTimer from "./components/SleepTimer.jsx";
+import "./app.css";
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./Firebase";
-
 import { database } from "./Firebase";
 import { ref, onValue } from "firebase/database";
 
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import SleepTimer from "./components/SleepTimer.jsx";
-
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import Grid from "@mui/material/Grid";
-import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import Stack from "@mui/material/Stack";
 import Fab from "@mui/material/Fab";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
+import CssBaseline from "@mui/material/CssBaseline";
+import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import PauseIcon from "@mui/icons-material/Pause";
-import ButtonGroup from "@mui/material/ButtonGroup";
 
-import "./app.css";
 function App() {
   Howler.volume(0.5);
 

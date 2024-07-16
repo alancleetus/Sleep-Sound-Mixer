@@ -1,22 +1,19 @@
 import { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
-import AlarmOutlinedIcon from "@mui/icons-material/AlarmOutlined";
-
 import PropTypes from "prop-types";
-import Modal from "@mui/material/Modal";
-
-import Stack from "@mui/material/Stack";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import "../app.css";
-import { ButtonGroup } from "@mui/material";
 
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import { ButtonGroup } from "@mui/material";
 
+import AlarmOutlinedIcon from "@mui/icons-material/AlarmOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import AlarmOffIcon from "@mui/icons-material/AlarmOff";
-import { StopCircle } from "@mui/icons-material";
 
 export default function SleepTimer({ PauseAll }) {
   const [timer, setTimer] = useState(0);
