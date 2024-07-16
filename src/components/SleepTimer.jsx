@@ -75,21 +75,21 @@ export default function SleepTimer({ PauseAll }) {
             <Grid
               item
               xs={4}
-              sx={{ display: { xs: "none", md: "block", lg: "none" } }}
+              sx={{ display: { xs: "none", md: "block", lg: "block" } }}
             >
               HOURS
             </Grid>
             <Grid
               item
               xs={4}
-              sx={{ display: { xs: "none", md: "block", lg: "none" } }}
+              sx={{ display: { xs: "none", md: "block", lg: "block" } }}
             >
               MINUTES
             </Grid>
             <Grid
               item
               xs={4}
-              sx={{ display: { xs: "none", md: "block", lg: "none" } }}
+              sx={{ display: { xs: "none", md: "block", lg: "block" } }}
             >
               SECONDS
             </Grid>
@@ -169,15 +169,6 @@ export default function SleepTimer({ PauseAll }) {
         {timerGrid()}
       </Stack>
 
-      <AlarmOutlinedIcon
-        sx={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          cursor: "pointer",
-        }}
-        onClick={handleOpen}
-      />
       <Modal
         open={open}
         onClose={handleClose}
