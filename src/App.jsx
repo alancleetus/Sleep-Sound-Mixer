@@ -15,10 +15,14 @@ import SleepTimer from "./components/SleepTimer.jsx";
 
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import Grid from "@mui/material/Grid";
-
+import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import Stack from "@mui/material/Stack";
 import Fab from "@mui/material/Fab";
 import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import PauseIcon from "@mui/icons-material/Pause";
+import ButtonGroup from "@mui/material/ButtonGroup";
+
 import "./app.css";
 function App() {
   Howler.volume(0.5);
@@ -124,10 +128,7 @@ function App() {
               alignItems: "center",
             }}
           >
-            <button onClick={pauseAllSounds}>Pause ALL</button>
-
             <SleepTimer PauseAll={pauseAllSounds} />
-
             <Grid
               container
               spacing={3}
@@ -136,7 +137,7 @@ function App() {
             >
               {sounds.map((sound, index) => {
                 return (
-                  <Grid item xs={12} sm={6} md={4} key={sound.id}>
+                  <Grid item xs={4} sm={3} md={2} key={sound.id}>
                     <MusicComponent
                       key={sound.id}
                       name={sound.name}
@@ -150,16 +151,21 @@ function App() {
               })}
             </Grid>
 
-            <Fab
-              className="fab-volume-mixer"
-              id="custom-fab"
-              variant="extended"
-              size="medium"
-              onClick={handleOpen}
-            >
-              <TuneOutlinedIcon sx={{ mr: 1 }} />
-              Volume Mixer
-            </Fab>
+            <div id="fab-container">
+              <Fab size="small" onClick={pauseAllSounds} id="custom-fab">
+                <PauseIcon />
+              </Fab>{" "}
+              <Fab
+                className="fab-volume-mixer"
+                id="custom-fab"
+                variant="extended"
+                size="medium"
+                onClick={handleOpen}
+              >
+                <TuneOutlinedIcon sx={{ mr: 1 }} />
+                Volume Mixer
+              </Fab>
+            </div>
             <Modal
               open={open}
               onClose={handleClose}
@@ -184,35 +190,35 @@ function App() {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  {sounds.map(
-                    (sound, index) =>
-                      musicRefs.current[index].getPlaying() && (
-                        <Grid item xs={12} sm={6} md={4} key={sound.id}>
-                          <img
-                            src={sound.icon}
-                            alt={`${sound.name} icon`}
-                            style={{ width: 35, height: 35 }}
-                            className=""
-                          />
-                          <input
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={volumes[index]}
-                            onChange={(e) =>
-                              handleVolumeChange(index, e.target.value)
-                            }
-                          />
-                        </Grid>
-                      )
-                  )}
+                  {sounds.map((sound, index) => {
+                    const ref = musicRefs.current[index];
+                    return ref && ref.getPlaying() ? (
+                      <Grid item xs={12} sm={6} md={4} key={sound.id}>
+                        <img
+                          src={sound.icon}
+                          alt={`${sound.name} icon`}
+                          style={{ width: 35, height: 35 }}
+                          className=""
+                        />
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={volumes[index]}
+                          onChange={(e) =>
+                            handleVolumeChange(index, e.target.value)
+                          }
+                        />
+                      </Grid>
+                    ) : null;
+                  })}
                 </Grid>
               </Stack>
             </Modal>
           </Stack>
         )}
       </Container>
-    </>
+    </div>
   );
 }
 
