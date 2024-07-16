@@ -101,8 +101,14 @@ function App() {
   const handleClose = () => setOpen(false);
 
   return (
-    <>
-      <Container className="main-app-container">
+    <div id="main-div">
+      <div id="background-blob"></div>
+      <Container id="header-container">
+        <Typography id="app-heading" gutterBottom>
+          Sleep Sounds Mixer
+        </Typography>
+      </Container>
+      <Container maxWidth="sm" id="main-app-container">
         <CssBaseline />
         {!loggedIn ? (
           <Button variant="contained" onClick={loginAsTestUser}>

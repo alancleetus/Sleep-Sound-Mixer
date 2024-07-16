@@ -4,10 +4,25 @@
   --text-color: #fff;
 
   --primary-color: #7900f8;
-  --primary-muted-color: #ccbae4;
+  --primary-muted-color: #b68feb;
   --button-disabled-color: #302937;
   --button-blur: #3e0081;
   --button-focus: #7900f8;
+  --button-outline: #300360;
+}
+.custom-shape-divider-top-1721110650 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  background-image: url("./assets/wavesOpacity.svg");
+}
+
+#fab-container {
+  position: fixed;
+  bottom: 20px;
 }
 
 #custom-fab {
