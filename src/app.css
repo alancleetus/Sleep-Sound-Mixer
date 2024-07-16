@@ -35,29 +35,108 @@
   color: var(--text-color);
 }
 
-.main-app-container {
-  min-height: 100vh;
+#header-container {
+  color: white;
+  min-height: 30vh;
+  text-align: center;
   display: flex;
   justify-content: center;
-  background: #05000b;
+  align-items: center;
+  transform: all 1s ease;
+  font-weight: 400;
+}
+
+#outline-button {
+  border: 1px solid #7900f8;
+  color: #7900f8;
+}
+
+#outline-button:hover {
+  background: #7900f8;
+  border: 1px solid #7900f8;
   color: white;
 }
 
+#background-blob {
+  background-image: url("./assets/wave.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  position: absolute;
+  background-position: center;
+}
+
+#main-app-container {
+  display: flex;
+  justify-content: center;
+  min-width: 300px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#main-app-container > * {
+  z-index: 1;
+}
+#app-heading {
+  font-size: 2em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  z-index: 1;
+  font-family: "Playwrite CU", sans-serif;
+}
+
 #sound-toggle-button {
-  background: var(--background-color);
-  border: 2px solid var(--button-focus);
+  background: var(--primary-muted-color);
+  border: 1px solid var(--button-outline);
   border-radius: 15px;
   padding: 15px;
-  transition: all 0.1s ease-in;
+  transition: all 0.25s ease-in;
 }
 
-#sound-toggle-button:hover,
 #sound-toggle-button[aria-pressed="true"] {
-  background: var(--button-blur);
-  border: 2px solid var(--button-focus);
+  background: var(--primary-muted-color);
+  border: 1px solid var(--button-outline);
+  box-shadow: rgba(146, 46, 240, 0.4) -5px 5px,
+    rgba(159, 46, 240, 0.3) -10px 10px, rgba(127, 46, 240, 0.2) -15px 15px,
+    rgba(162, 46, 240, 0.1) -20px 20px, rgba(156, 46, 240, 0.05) -25px 25px;
 }
 
-.svg-color-filter {
-  filter: invert(99%) sepia(2%) saturate(387%) hue-rotate(27deg)
-    brightness(117%) contrast(100%);
+.modal-Stack {
+  background: #05000b;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 3;
+  justify-content: center;
+  align-items: center;
+  max-width: 100vw;
+  min-height: 100vh;
+}
+
+.modal-Stack Button {
+  width: 200px;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  background: #05000b;
+  border: 1px solid #7900f8;
+  color: #7900f8;
+}
+
+.modal-Stack Button:hover {
+  background: #7900f8;
+  border: 1px solid #7900f8;
+  color: white;
+}
+
+.close-modal {
+  margin: 10px;
+  color: #7900f8;
+  cursor: pointer;
+}
+
+.modal-time-grid {
+  text-align: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
