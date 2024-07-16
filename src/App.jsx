@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useRef, useEffect } from "react";
 import MusicComponent from "./components/MusicComponent.jsx";
-import Box from "@mui/material/Box";
 import { Howler } from "howler";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./Firebase";
@@ -14,38 +13,21 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import SleepTimer from "./components/SleepTimer.jsx";
 
-import NatureIcon from "@mui/icons-material/Nature";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
-import StormIcon from "@mui/icons-material/Storm";
-import WaterDropIcon from "@mui/icons-material/WaterDrop";
-import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
-import WavesIcon from "@mui/icons-material/Waves";
-import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
-import UmbrellaIcon from "@mui/icons-material/Umbrella";
-import GrainIcon from "@mui/icons-material/Grain";
-import FlashOnIcon from "@mui/icons-material/FlashOn";
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import Grid from "@mui/material/Grid";
+
+import Stack from "@mui/material/Stack";
+import Fab from "@mui/material/Fab";
+import Modal from "@mui/material/Modal";
+import "./app.css";
 function App() {
   Howler.volume(0.5);
-
-  const icons = {
-    NatureIcon,
-    AcUnitIcon,
-    StormIcon,
-    WaterDropIcon,
-    ThunderstormIcon,
-    WavesIcon,
-    DirectionsWalkIcon,
-    UmbrellaIcon,
-    GrainIcon,
-    FlashOnIcon,
-    MusicNoteIcon,
-  };
 
   const [sounds, setSounds] = useState([]);
 
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const [volumes, setVolumes] = useState({});
 
   const fetchSounds = () => {
     console.log("Fetching sounds...");
@@ -59,10 +41,16 @@ function App() {
           const soundList = Object.keys(data).map((key) => ({
             id: key,
             ...data[key],
-            Icon: icons[data[key].icon], // Map the icon string to the actual icon component
           }));
           console.log("Processed Sound List:", soundList); // Log processed data
           setSounds(soundList);
+
+          // Initialize volumes state with default values
+          const initialVolumes = soundList.reduce((acc, sound) => {
+            acc[sound.id] = 50; // Default volume
+            return acc;
+          }, {});
+          setVolumes(initialVolumes);
         } else {
           console.log("No data found at the 'sounds' path");
         }
@@ -72,6 +60,7 @@ function App() {
       }
     );
   };
+
   const loginAsTestUser = async () => {
     const testEmail = "test@test.com"; // Replace with your test account email
     const testPassword = "testpass1!"; // Replace with your test account password
@@ -89,11 +78,28 @@ function App() {
       console.error("Error signing in test user:", error);
     }
   };
+
   const musicRefs = useRef([]);
 
   const pauseAllSounds = () => {
     musicRefs.current.forEach((ref) => ref?.pauseSound());
   };
+
+  const handleVolumeChange = (id, newVolume) => {
+    setVolumes((prevVolumes) => ({
+      ...prevVolumes,
+      [id]: newVolume,
+    }));
+
+    if (musicRefs.current[id]) {
+      musicRefs.current[id].changeVolume(newVolume);
+    }
+  };
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       <Container className="main-app-container">
@@ -103,7 +109,7 @@ function App() {
             Login as Test User
           </Button>
         ) : (
-          <Box
+          <Stack
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -129,23 +135,75 @@ function App() {
                       key={sound.id}
                       name={sound.name}
                       song={sound.url}
-                      // Icon={sound.icon}
+                      Icon={sound.icon}
+                      modalMode={false}
                       ref={(el) => (musicRefs.current[index] = el)}
                     />
                   </Grid>
                 );
               })}
             </Grid>
+
             <Fab
               className="fab-volume-mixer"
               id="custom-fab"
               variant="extended"
               size="medium"
+              onClick={handleOpen}
             >
               <TuneOutlinedIcon sx={{ mr: 1 }} />
               Volume Mixer
             </Fab>
-          </Box>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-title"
+              aria-describedby="modal-description"
+            >
+              <Stack
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "80%",
+                  bgcolor: "background.paper",
+                  boxShadow: 24,
+                  p: 4,
+                }}
+              >
+                <Grid
+                  container
+                  spacing={3}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  {sounds.map(
+                    (sound, index) =>
+                      musicRefs.current[index].getPlaying() && (
+                        <Grid item xs={12} sm={6} md={4} key={sound.id}>
+                          <img
+                            src={sound.icon}
+                            alt={`${sound.name} icon`}
+                            style={{ width: 35, height: 35 }}
+                            className=""
+                          />
+                          <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={volumes[index]}
+                            onChange={(e) =>
+                              handleVolumeChange(index, e.target.value)
+                            }
+                          />
+                        </Grid>
+                      )
+                  )}
+                </Grid>
+              </Stack>
+            </Modal>
+          </Stack>
         )}
       </Container>
     </>
