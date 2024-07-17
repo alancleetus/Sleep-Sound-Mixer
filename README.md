@@ -9,6 +9,9 @@ Welcome to the Sleep Sound Mixer project! This application allows users to mix d
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5c5d1979-98ac-4f61-b0bc-61104e221b6e/deploy-status)](https://app.netlify.com/sites/alan-c-sound-mixer/deploys)
 
 [TRY IT](https://alan-c-sound-mixer.netlify.app/)
+
+![demo](./Sound%20Mixer%20Demo.gif)
+
 ## Features
 
 - **Custom Sound Mixing**: Combine various sounds such as rain, ocean waves, white noise, and more to create a unique mix.
