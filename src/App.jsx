@@ -151,7 +151,7 @@ function App() {
             <div id="fab-container">
               <Fab size="small" onClick={pauseAllSounds} id="custom-fab">
                 <PauseIcon />
-              </Fab>{" "}
+              </Fab>
               <Fab
                 className="fab-volume-mixer"
                 id="custom-fab"
@@ -176,7 +176,7 @@ function App() {
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                   width: "80%",
-                  bgcolor: "background.paper",
+                  bgcolor: "var(--primary-muted-color)",
                   boxShadow: 24,
                   p: 4,
                 }}

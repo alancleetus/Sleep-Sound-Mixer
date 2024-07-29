@@ -114,7 +114,7 @@
   min-height: 100vh;
 }
 
-.modal-Stack Button {
+.modal-Stack .time-button {
   width: 200px;
   padding: 10px 10px;
   margin-bottom: 10px;
@@ -123,7 +123,7 @@
   color: #7900f8;
 }
 
-.modal-Stack Button:hover {
+.modal-Stack .time-button:hover {
   background: #7900f8;
   border: 1px solid #7900f8;
   color: white;
@@ -139,4 +139,17 @@
   text-align: center;
   align-items: center;
   margin-bottom: 20px;
+}
+
+#hours-dd,
+#mins-dd,
+#sec-dd {
+  background: none;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  background: #05000b;
+  border: 1px solid #7900f8;
+  color: #7900f8;
+  border-radius: 4px;
 }
