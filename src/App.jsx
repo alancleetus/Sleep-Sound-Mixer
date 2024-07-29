@@ -191,7 +191,13 @@ function App() {
                 id="popup"
               >
                 <div id="popup-sound-mixer-container">
-                  <div>
+                  <div
+                    style={{
+                      maxHeight: "300px",
+                      overflowY: "scroll",
+                      scrollbarWidth: "none",
+                    }}
+                  >
                     {sounds.map((sound, index) => {
                       const ref = musicRefs.current[index];
                       return ref && ref.getPlaying() ? (
