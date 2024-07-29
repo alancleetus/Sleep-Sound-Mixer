@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Howler } from "howler";
 
 import MusicComponent from "./components/MusicComponent.jsx";
@@ -84,6 +84,10 @@ function App() {
 
   const pauseAllSounds = () => {
     musicRefs.current.forEach((ref) => ref?.pauseSound());
+    if (open) {
+      setOpen(false);
+      setClickOutside(false);
+    }
   };
 
   const handleVolumeChange = (id, newVolume) => {
@@ -98,8 +102,36 @@ function App() {
   };
 
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [clickedOutside, setClickOutside] = useState(false);
+  const popupRef = useRef();
+
+  const toggleVolumeMixer = () => setOpen(!open);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        console.log("You clicked Outside the box!");
+        setClickOutside(true);
+      } else {
+        setClickOutside(false);
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("clickedoutside:" + clickedOutside);
+    console.log("open:" + open);
+    if (open && clickedOutside) {
+      setOpen(false);
+      setClickOutside(false); // Reset clickedOutside after closing
+    }
+  }, [clickedOutside, open]);
 
   return (
     <div id="main-div">
@@ -148,8 +180,55 @@ function App() {
               })}
             </Grid>
 
-            <div id="fab-container">
-              <Fab size="small" onClick={pauseAllSounds} id="custom-fab">
+            <div id="fab-container" ref={popupRef}>
+              <div
+                style={{
+                  scale: open ? "1" : "0",
+                  transition: "500ms all ease",
+                  transformOrigin: "top center",
+                }}
+                onBlur={toggleVolumeMixer}
+                id="popup"
+              >
+                <div id="popup-sound-mixer-container">
+                  <div>
+                    {sounds.map((sound, index) => {
+                      const ref = musicRefs.current[index];
+                      return ref && ref.getPlaying() ? (
+                        <Grid item xs={12} sm={6} md={4} key={sound.id}>
+                          <img
+                            src={sound.icon}
+                            alt={`${sound.name} icon`}
+                            style={{ width: 35, height: 35 }}
+                            className=""
+                          />
+                          <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={volumes[index]}
+                            onChange={(e) =>
+                              handleVolumeChange(index, e.target.value)
+                            }
+                            style={{
+                              accentColor: "var(--primary-muted-color)",
+                            }}
+                          />
+                        </Grid>
+                      ) : null;
+                    })}
+                  </div>
+                </div>
+
+                <div id="arrow"> </div>
+              </div>
+              <Fab
+                size="small"
+                onClick={() => {
+                  pauseAllSounds();
+                }}
+                id="custom-fab"
+              >
                 <PauseIcon />
               </Fab>
               <Fab
@@ -157,61 +236,12 @@ function App() {
                 id="custom-fab"
                 variant="extended"
                 size="medium"
-                onClick={handleOpen}
+                onClick={toggleVolumeMixer}
               >
                 <TuneOutlinedIcon sx={{ mr: 1 }} />
                 Volume Mixer
               </Fab>
             </div>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-title"
-              aria-describedby="modal-description"
-            >
-              <Stack
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: "80%",
-                  bgcolor: "var(--primary-muted-color)",
-                  boxShadow: 24,
-                  p: 4,
-                }}
-              >
-                <Grid
-                  container
-                  spacing={3}
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  {sounds.map((sound, index) => {
-                    const ref = musicRefs.current[index];
-                    return ref && ref.getPlaying() ? (
-                      <Grid item xs={12} sm={6} md={4} key={sound.id}>
-                        <img
-                          src={sound.icon}
-                          alt={`${sound.name} icon`}
-                          style={{ width: 35, height: 35 }}
-                          className=""
-                        />
-                        <input
-                          type="range"
-                          min="0"
-                          max="100"
-                          value={volumes[index]}
-                          onChange={(e) =>
-                            handleVolumeChange(index, e.target.value)
-                          }
-                        />
-                      </Grid>
-                    ) : null;
-                  })}
-                </Grid>
-              </Stack>
-            </Modal>
           </Stack>
         )}
       </Container>
